@@ -3,6 +3,7 @@
 
 # 保留 git 配置
 !.gitignore
+!README.md
 
 # 自己的 skill
 !awesome-creator/
