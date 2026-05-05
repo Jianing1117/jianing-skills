@@ -1,0 +1,23 @@
+# 忽略所有，只保留自己的 skill
+*
+
+# 保留 git 配置
+!.gitignore
+
+# 自己的 skill
+!awesome-creator/
+!awesome-creator/**
+!awesome-creator-content/
+!awesome-creator-content/**
+!awesome-creator-cover/
+!awesome-creator-cover/**
+!awesome-creator-cover-whiteboard/
+!awesome-creator-cover-whiteboard/**
+!awesome-creator-hook/
+!awesome-creator-hook/**
+!awesome-creator-positioning/
+!awesome-creator-positioning/**
+!awesome-creator-title/
+!awesome-creator-title/**
+!wechat-formatter/
+!wechat-formatter/**

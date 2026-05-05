@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信封面 - {{TITLE}}</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f0f0;
+  font-family: 'PingFang SC', 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+.cover-container {
+  width: 900px;
+  height: 383px;
+  background: linear-gradient(135deg, #C8D9E6 0%, #EAF3F8 50%, #FFFFFF 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 60px;
+}
+
+/* 装饰性几何元素 - 左上角 */
+.decoration-top-left {
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  width: 120px;
+  height: 120px;
+  background: #567C8D;
+  opacity: 0.15;
+  border-radius: 50%;
+}
+
+/* 装饰性几何元素 - 右下角 */
+.decoration-bottom-right {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: #C8D9E6;
+  opacity: 0.3;
+  border-radius: 50%;
+}
+
+/* 小装饰点 */
+.decoration-dots {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: #567C8D;
+  opacity: 0.4;
+  border-radius: 50%;
+}
+
+/* 左侧装饰线 */
+.decoration-line-left {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 100px;
+  background: linear-gradient(to bottom, #C8D9E6, #567C8D);
+  border-radius: 2px;
+}
+
+/* 主要内容区 */
+.main-content {
+  text-align: center;
+  z-index: 10;
+  max-width: 780px;
+}
+
+/* 副标题 - 英文或重要句子 */
+.subtitle-en {
+  font-size: 12px;
+  color: #567C8D;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* 主标题 */
+.main-title {
+  font-size: 48px;
+  color: #2F4156;
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* 强调关键词 */
+.highlight {
+  background: linear-gradient(120deg, #C8D9E6 0%, #567C8D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 分割线 */
+.divider {
+  width: 60px;
+  height: 3px;
+  background: #C8D9E6;
+  margin: 20px auto;
+  border-radius: 2px;
+}
+
+/* 描述文字 */
+.description {
+  font-size: 16px;
+  color: #567C8D;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+/* 底部标签 */
+.bottom-tags {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+
+.tag {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.tag-primary {
+  background: #C8D9E6;
+  color: #2F4156;
+}
+
+.tag-secondary {
+  background: #E8CECA;
+  color: #B07A72;
+}
+</style>
+</head>
+<body>
+
+<div class="cover-container">
+  <!-- 装饰元素 -->
+  <div class="decoration-top-left"></div>
+  <div class="decoration-bottom-right"></div>
+  <div class="decoration-line-left"></div>
+
+  <div class="decoration-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- 主要内容 -->
+  <div class="main-content">
+    <div class="subtitle-en">{{SUBTITLE}}</div>
+
+    <h1 class="main-title">{{TITLE}}</h1>
+
+    <div class="divider"></div>
+
+    <p class="description">{{DESCRIPTION}}</p>
+
+    <div class="bottom-tags">
+      <span class="tag tag-primary">加宁慢慢来</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
