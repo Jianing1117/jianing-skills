@@ -16,11 +16,13 @@ description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公
 2. **微信封面图片**：`wechat-cover-[标题].png` - 900x383px，2.35:1 比例
 
 核心参考：
-- 样式风格：`/Users/jnx/Desktop/wechat-preview.html`（已验证可用的完整排版样本）
-- 品牌规范：`/Users/jnx/Documents/aiasme/aiasme/projects/IP/系统规则/【审美】品牌视觉规范文档.md`
-- 文章转换脚本：`~/.claude/skills/wechat-formatter/scripts/md_to_wechat.py`
-- 封面生成脚本：`~/.claude/skills/wechat-formatter/scripts/generate_cover.py`
-- 封面模板：`~/.claude/skills/wechat-formatter/templates/cover_template.html`
+- 样式与品牌规范：本 `SKILL.md` 中的色板、排版约束和元素映射规则
+- 文章转换脚本：`scripts/md_to_wechat.py`
+- 封面生成脚本：`scripts/generate_cover.py`
+- 底部卡片脚本：`scripts/generate_footer_card.py`
+- 封面模板：`templates/cover_template.html`
+
+执行前先解析当前 Skill 目录为 `SKILL_DIR`，并为本次任务创建 `OUTPUT_DIR`。所有脚本和输出都通过这两个变量引用，不要硬编码用户名、桌面、主目录或 Obsidian 路径。
 
 ---
 
@@ -78,23 +80,27 @@ description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公
 使用脚本转换（首选）：
 
 ```bash
-python3 ~/.claude/skills/wechat-formatter/scripts/md_to_wechat.py \
+SKILL_DIR="<已安装的 wechat-formatter 目录>"
+OUTPUT_DIR="./outputs/wechat-<标题>"
+mkdir -p "$OUTPUT_DIR"
+
+python3 "$SKILL_DIR/scripts/md_to_wechat.py" \
   --input "文章.md" \
-  --output "/Users/jnx/Desktop/wechat-[标题]/wechat-[标题].html"
+  --output "$OUTPUT_DIR/wechat-<标题>.html"
 ```
 
 或直接传入文本内容进行转换（stdin 模式）：
 
 ```bash
-python3 ~/.claude/skills/wechat-formatter/scripts/md_to_wechat.py \
-  --output "/Users/jnx/Desktop/wechat-[标题]/wechat-[标题].html"
+python3 "$SKILL_DIR/scripts/md_to_wechat.py" \
+  --output "$OUTPUT_DIR/wechat-<标题>.html"
 # 然后将文章内容通过 stdin 传入
 ```
 
 生成后，用 `open` 打开让用户查看：
 
 ```bash
-open "/Users/jnx/Desktop/wechat-[标题]/wechat-[标题].html"
+open "$OUTPUT_DIR/wechat-<标题>.html"
 ```
 
 ### 第 2 步：生成微信封面图片
@@ -102,18 +108,18 @@ open "/Users/jnx/Desktop/wechat-[标题]/wechat-[标题].html"
 使用封面生成脚本：
 
 ```bash
-python3 ~/.claude/skills/wechat-formatter/scripts/generate_cover.py \
+python3 "$SKILL_DIR/scripts/generate_cover.py" \
   --title "主标题" \
   --subtitle "副标题（英文或重要句子）" \
   --description "描述文字" \
-  --output "/Users/jnx/Desktop/wechat-[标题]/wechat-cover-[标题].png" \
+  --output "$OUTPUT_DIR/wechat-cover-<标题>.png" \
   --highlight "关键词1" "关键词2"
 ```
 
 生成后，用 `open` 打开让用户查看：
 
 ```bash
-open "/Users/jnx/Desktop/wechat-[标题]/wechat-cover-[标题].png"
+open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 ```
 
 **封面设计规范（2026-04-20 最终确认版）**：
@@ -141,7 +147,7 @@ open "/Users/jnx/Desktop/wechat-[标题]/wechat-cover-[标题].png"
 将生成的两个文件放在同一文件夹：
 
 ```
-/Users/jnx/Desktop/wechat-[文章标题]/
+<OUTPUT_DIR>/
 ├── wechat-[标题].html          # 公众号排版 HTML
 └── wechat-cover-[标题].png     # 封面图片
 ```
@@ -348,16 +354,19 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
   <p style="font-size:15px;color:#2F4156;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号 👇</p>
 </section>
 
-<!-- 底部品牌卡片：请手动插入图片 jianing-footer-card.png -->
+<!-- 底部品牌卡片：请手动插入生成的品牌卡片图片 -->
 <section style="margin:20px 0 0;padding:20px;background:#EAF3F8;border-radius:12px;text-align:center;">
-  <p style="font-size:13px;color:#567C8D;margin:0;line-height:1.8;">📌 此处请插入底部品牌卡片图片<br><span style="font-size:12px;color:#BBBBBB;">文件：Desktop/jianing-footer-card.png</span></p>
+  <p style="font-size:13px;color:#567C8D;margin:0;line-height:1.8;">📌 此处请插入本次任务生成的底部品牌卡片图片</p>
 </section>
 ```
 
-> **底部卡片说明**：底部品牌卡片已预先生成为图片文件 `~/Desktop/jianing-footer-card.png`。粘贴到微信公众号后台后，在文章末尾手动插入该图片即可。  
-> 如需重新生成：  
+> **底部卡片说明**：使用用户明确提供的头像和二维码生成。粘贴到微信公众号后台后，在文章末尾手动插入该图片即可。
+> 示例：
 > ```bash
-> python3 ~/.claude/skills/wechat-formatter/scripts/generate_footer_card.py --output ~/Desktop/jianing-footer-card.png
+> python3 "$SKILL_DIR/scripts/generate_footer_card.py" \
+>   --avatar "<头像图片路径>" \
+>   --qrcode "<二维码图片路径>" \
+>   --output "$OUTPUT_DIR/jianing-footer-card.png"
 > ```
 
 ---
@@ -377,15 +386,15 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 ### 3. 输出文件夹结构
 
 ```
-/Users/jnx/Desktop/wechat-[文章标题]/
+<OUTPUT_DIR>/
 ├── wechat-[标题].html          # 公众号排版 HTML
 └── wechat-cover-[标题].png     # 封面图片
 ```
 
 生成完毕后，用 `open` 命令打开两个文件让用户查看：
 ```bash
-open "/Users/jnx/Desktop/wechat-[标题]/wechat-[标题].html"
-open "/Users/jnx/Desktop/wechat-[标题]/wechat-cover-[标题].png"
+open "$OUTPUT_DIR/wechat-<标题>.html"
+open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 ```
 
 ---

@@ -70,7 +70,7 @@ FOOTER_HTML = f"""
 
 <!-- 底部品牌卡片：请手动插入图片 jianing-footer-card.png -->
 <section style="margin:20px 0 0;padding:20px;background:{C_LBLUE};border-radius:12px;text-align:center;">
-  <p style="font-size:13px;color:{C_TEAL};margin:0;line-height:1.8;">📌 此处请插入底部品牌卡片图片<br><span style="font-size:12px;color:#BBBBBB;">文件：Desktop/jianing-footer-card.png</span></p>
+  <p style="font-size:13px;color:{C_TEAL};margin:0;line-height:1.8;">📌 此处请插入本次任务生成的底部品牌卡片图片</p>
 </section>
 """
 

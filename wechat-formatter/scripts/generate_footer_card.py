@@ -4,12 +4,17 @@ generate_footer_card.py
 生成「加宁慢慢来」品牌底部卡片图片，用于微信公众号文章末尾手动插入。
 
 用法：
-    python3 generate_footer_card.py --output /path/to/footer-card.png
-    python3 generate_footer_card.py  # 默认输出到 Desktop
+    python3 generate_footer_card.py \
+        --avatar ./assets/avatar.jpg \
+        --qrcode ./assets/qrcode.jpg \
+        --output ./outputs/footer-card.png
+
+未提供头像或二维码时，会生成清晰的占位区域。
 """
 
 import argparse
 from pathlib import Path
+from typing import Optional
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -31,9 +36,6 @@ C_LBLUE = hex_rgb("#EAF3F8")
 C_DPINK = hex_rgb("#B07A72")
 C_TEXT  = hex_rgb("#333333")
 C_WHITE = (255, 255, 255)
-
-AVATAR_PATH = Path("/Users/jnx/Desktop/jianing-avatar.JPG")
-QRCODE_PATH = Path("/Users/jnx/Desktop/jianing-qrcode.JPG")
 
 # ─────────────────────────────────────────────
 # 工具
@@ -104,7 +106,14 @@ TEXT_MAX_W = QR_X - GAP_TX_QR - TEXT_X        # 文字区可用宽度
 # 主函数
 # ─────────────────────────────────────────────
 
-def generate_footer_card(output_path: str):
+def generate_footer_card(
+    output_path: str,
+    avatar_path: Optional[str] = None,
+    qrcode_path: Optional[str] = None,
+):
+    avatar = Path(avatar_path).expanduser() if avatar_path else None
+    qrcode = Path(qrcode_path).expanduser() if qrcode_path else None
+
     # 字体
     f_name  = load_font(50)
     f_tag   = load_font(28)
@@ -161,8 +170,8 @@ def generate_footer_card(output_path: str):
     av_paste_x = AV_CX - AVATAR_D // 2
     av_paste_y = av_cy - AVATAR_D // 2
 
-    if AVATAR_PATH.exists():
-        av = circle_crop(Image.open(AVATAR_PATH), AVATAR_D)
+    if avatar and avatar.exists():
+        av = circle_crop(Image.open(avatar), AVATAR_D)
         # 白底
         wb = Image.new("RGBA", (AVATAR_D, AVATAR_D), C_WHITE + (255,))
         wm = Image.new("L", (AVATAR_D, AVATAR_D), 0)
@@ -227,8 +236,8 @@ def generate_footer_card(output_path: str):
     # ── 二维码 ──
     qr_y = mid_y - QR_SIZE // 2
 
-    if QRCODE_PATH.exists():
-        qr = Image.open(QRCODE_PATH).resize((QR_SIZE, QR_SIZE), Image.LANCZOS).convert("RGB")
+    if qrcode and qrcode.exists():
+        qr = Image.open(qrcode).resize((QR_SIZE, QR_SIZE), Image.LANCZOS).convert("RGB")
         # 白底背景
         pad = 10
         qr_bg = Image.new("RGB", (QR_SIZE + pad*2, QR_SIZE + pad*2), C_WHITE)
@@ -253,6 +262,8 @@ def generate_footer_card(output_path: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="生成加宁慢慢来底部品牌卡片")
-    parser.add_argument("--output", "-o", default="/Users/jnx/Desktop/jianing-footer-card.png")
+    parser.add_argument("--avatar", help="头像图片路径；省略时使用占位图")
+    parser.add_argument("--qrcode", help="二维码图片路径；省略时使用占位图")
+    parser.add_argument("--output", "-o", default="outputs/jianing-footer-card.png")
     args = parser.parse_args()
-    generate_footer_card(args.output)
+    generate_footer_card(args.output, args.avatar, args.qrcode)

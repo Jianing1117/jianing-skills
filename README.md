@@ -17,10 +17,9 @@
 | [awesome-creator](awesome-creator/) | 主入口，判断当前阶段并路由到对应模块 |
 | [awesome-creator-positioning](awesome-creator-positioning/) | 从零确定内容定位——我是谁、做什么、给谁看 |
 | [awesome-creator-title](awesome-creator-title/) | 标题优化，覆盖 9 种触发模式，生成 27+ 个候选 |
-| [awesome-creator-hook](awesome-creator-hook/) | 前 3 秒开头设计，3 种方法生成 10-15 条候选 |
+| [awesome-creator-hook](awesome-creator-hook/) | 前 3 秒内容开头设计（不是系统生命周期 Hook），3 种方法生成 10-15 条候选 |
 | [awesome-creator-content](awesome-creator-content/) | 正文结构诊断 + 五种互动钩子设计（完播/点赞/收藏/转发/评论） |
-| [awesome-creator-cover](awesome-creator-cover/) | 封面设计入口，根据内容类型路由到对应风格 |
-| [awesome-creator-cover-whiteboard](awesome-creator-cover-whiteboard/) | 白板风格封面，输出 `.excalidraw` 文件 |
+| [awesome-creator-cover](awesome-creator-cover/) | 白板风格封面设计，输出 `.excalidraw` 文件 |
 
 **创作流程**：定位 → 标题 → 开头 → 正文设计 → 封面
 
@@ -101,10 +100,13 @@ pip3 install playwright pillow
 python3 -m playwright install chromium
 ```
 
+`awesome-creator-cover` 需要另行安装 `text-to-whiteboard`；缺少该依赖时，Skill 只输出可执行的封面结构与文案，不会声称已生成 `.excalidraw` 文件。
+
 其他 skill 无外部依赖。
 
 ---
 
 ## 版本记录
 
+- **2026-08** — 合并冗余封面子路由；移除公开文档和脚本中的个人本地路径，改为相对路径与显式参数
 - **2026-05** — 初始版本：awesome-creator 完整系列 + wechat-formatter
