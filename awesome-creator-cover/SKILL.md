@@ -38,15 +38,30 @@ description: |
 
 如果用户已经提供文案或脚本，直接从中提取，不要要求用户重复概括。
 
-### 第二步：生成封面
+### 第二步：收敛文案
 
-使用已安装的 `text-to-whiteboard` Skill 生成 `.excalidraw` 文件：
+- 标题尽量控制在 18 个中文字以内，超出时优先改写，不是简单截断。
+- 可选一行副标题，最多 28 字。
+- 要点最多 3 条，每条只保留一个意思。
+- 默认使用黑白主色与蓝绿点缀，不要为了“像白板”而堆满线条。
 
-- 优先采用简洁模式，使用黑白主色和少量点缀色。
-- 默认使用 Jianing Fav 配色；用户可以选择其他主题。
-- 将结果保存到当前任务的输出目录，不要硬编码桌面或用户主目录。
+### 第三步：生成可编辑封面
 
-如果 `text-to-whiteboard` 未安装，先说明依赖缺失，并返回可直接交给白板工具执行的封面结构与文案，不要声称已经生成文件。
+使用本 Skill 内置脚本 `scripts/make_cover.py`，不依赖其他 Skill。先定位到本 Skill 目录，再运行：
+
+```bash
+python3 scripts/make_cover.py \
+  --title "封面标题" \
+  --subtitle "可选副标题" \
+  --bullet "要点一" \
+  --bullet "要点二" \
+  --platform xiaohongshu \
+  --output ./cover.excalidraw
+```
+
+`--platform` 支持 `xiaohongshu`、`douyin` 和 `square`；可用 `--author` 添加署名。输出路径必须由当前任务明确给出，不要硬编码桌面或用户主目录。
+
+运行后确认文件存在、JSON 可解析，再告知用户已生成。用户可在 [Excalidraw](https://excalidraw.com) 中打开并继续编辑。
 
 ## 封面自检
 

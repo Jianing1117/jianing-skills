@@ -1,0 +1,26 @@
+{
+  "skill_name": "super-slides",
+  "evals": [
+    {
+      "id": 1,
+      "name": "create-from-scratch",
+      "prompt": "帮我做一个关于「AI 如何改变产品设计」的分享 PPT，大概 8-10 页，面向产品经理和设计师",
+      "expected_output": "生成一个完整的 HTML 演示稿，包含标题页、内容页、结束页，风格统一，视口适配正确",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "style-from-reference",
+      "prompt": "按我们公司的品牌做个演示稿。我们是一家金融科技公司，主色是深蓝色 #1E2761，辅助色是金色 #D4AF37，风格要专业高端。主题是「2024 年度业绩回顾」，6-8 页",
+      "expected_output": "根据用户提供的品牌颜色生成定制风格演示稿，颜色符合指定，风格专业",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "enhance-existing",
+      "prompt": "帮我优化这个演示稿，让它更有设计感。[附：一个简单的 HTML 演示稿文件]",
+      "expected_output": "增强现有演示稿的视觉效果，保持内容不变，改进排版、颜色、动画",
+      "files": []
+    }
+  ]
+}

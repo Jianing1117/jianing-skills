@@ -1,0 +1,4 @@
+interface:
+  display_name: "IP Guide & Illustrations"
+  short_description: "Create a three-part IP guide, then matching illustrations"
+  default_prompt: "Use $ip-cartoon-guide and ask whether I want A: create a new personal IP guide or B: create content illustrations. If I choose B without an IP or photo, offer the built-in Style 3 demo."
