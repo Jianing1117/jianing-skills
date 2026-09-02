@@ -6,18 +6,15 @@ Jianing 的公开 Skill 合集仓库。每个一级目录都是可独立安装�
 
 ## Skill 目录
 
-### 内容创作流程
+### 内容创作
 
 | Skill | 用途 |
 |---|---|
-| [awesome-creator](awesome-creator/) | 主入口，判断当前创作阶段并路由 |
-| [awesome-creator-positioning](awesome-creator-positioning/) | 从零确定内容定位 |
-| [awesome-creator-title](awesome-creator-title/) | 标题优化与候选生成 |
-| [awesome-creator-hook](awesome-creator-hook/) | 设计前 3 秒内容开头（不是系统生命周期 Hook） |
-| [awesome-creator-content](awesome-creator-content/) | 正文结构诊断与互动设计 |
+| [content-engine](content-engine/) | 会自我迭代的内容引擎：学（拆爆款 → playbook）、改（诊断 + 优化脚本）、复盘（月度数据回流）。原 awesome-creator 的标题 / 开头 / 正文方法论并入其 `awesome-creator.md` |
+| [awesome-creator-positioning](awesome-creator-positioning/) | 从零确定内容定位，起号前跑一次 |
 | [awesome-creator-cover](awesome-creator-cover/) | 白板风格封面设计，内置可编辑 Excalidraw 生成脚本 |
 
-**创作流程**：定位 → 标题 → 开头 → 正文设计 → 封面
+**创作流程**：定位（一次）→ 学 / 改 / 复盘（循环）
 
 ### 视觉、演示与发布
 
@@ -76,7 +73,7 @@ cp -R mindmirror "$HOME/.claude/skills/"
 
 ## 设计理念
 
-`awesome-creator` 系列的方法论详见 [philosophy.md](awesome-creator/references/philosophy.md)。核心是：**好内容是人与人之间的连接，不是对算法的讨好。**
+`content-engine` 的创作理念详见 [philosophy.md](content-engine/philosophy.md)。核心是：**好内容是人与人之间的连接，不是对算法的讨好。**
 
 ## 许可说明
 
@@ -84,6 +81,7 @@ cp -R mindmirror "$HOME/.claude/skills/"
 
 ## 版本记录
 
+- **2026-09** — `awesome-creator` 系列合并升级为 `content-engine`（学 / 改 / 复盘闭环，方法论以证据行沉淀在 `playbook.md`）；`positioning` 与 `cover` 保留为独立 Skill
 - **2026-08** — 并入 `mindmirror`、`ip-cartoon-guide` 和 `super-slides`；将 `awesome-creator-cover` 改为无外部 Skill 依赖的可编辑封面生成器
 - **2026-08** — 合并冗余封面子路由；移除已有公开文档和脚本中的个人本地路径
 - **2026-05** — 初始版本：`awesome-creator` 系列与 `wechat-formatter`
