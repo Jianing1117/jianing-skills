@@ -1,10 +1,10 @@
 ---
-name: craft
+name: awesome-creator
 version: v1.0
 说明: 手艺库。只给做法，不判好坏——判好坏是 SKILL.md 诊断段的事。
 ---
 
-# 手艺库
+# Awesome Creator · 手艺库
 
 诊断定位到哪个部位，就来这里取对应的做法。
 
