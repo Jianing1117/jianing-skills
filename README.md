@@ -32,6 +32,10 @@ Jianing 的公开 Skill 合集仓库。每个一级目录都是可独立安装�
 
 `mindmirror` 会处理高度个人化材料，必须先确认阅读范围与是否落盘；凭证、证件、银行资料和私钥等永不读取。
 
+### 单独的仓库
+
+- [AI 电脑体检 · mac-ai-checkup](https://github.com/Jianing1117/mac-ai-checkup)：给 Mac 做 AI 时代的体检，找出你和 AI 都容易漏掉的占用、悄悄失败的后台和 AI 留下的乱；删除只进废纸篓。
+
 ## 安装
 
 先克隆合集：
