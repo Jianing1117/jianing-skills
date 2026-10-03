@@ -178,7 +178,29 @@ open "$OUTPUT_DIR/wechat-<标题>.html"
 
 #### 生成方式
 
-AI 根据章节内容 + 上面的风格规则，自动撰写提示词并生成图片。提示词模板参考 brand-kit 的 `06-imagery/imagery-prompts.md`，只替换主体物件/场景描述，不改整体调性。
+**需要图片生成能力**（如 DALL-E、Midjourney、Flux 等）。按以下优先级：
+
+1. **AI 直接生成**（首选）：如果当前环境有图片生成能力，AI 根据章节内容 + 下面的提示词模板自动生成。
+2. **输出提示词让用户生成**（兜底）：如果当前环境没有图片生成能力，为每张插图输出完整的中英文提示词（遵循 brand-kit `06-imagery/imagery-prompts.md` 格式），并在 HTML 中放占位框标注「请用以下提示词生成图片后替换」。
+
+**提示词模板**（以摄影类为例，其他类型见 imagery-prompts.md）：
+
+```
+编辑式生活摄影。[根据章节内容描述一个具体场景]。
+冷灰调，低饱和，只带一丝极淡的[主色名]（[主色 hex]）。
+胶片颗粒，柔焦，大量留白。像韩国服装品牌的画册页。
+680x383px，16:9。
+```
+
+```
+Editorial lifestyle photograph. [scene description from section content].
+Cool pale-grey cast, low saturation, only a whisper of [main color name] [hex].
+Film grain, soft focus, generous negative space.
+Like a lookbook page from a Korean fashion label.
+No text, no logo. --ar 16:9 --stylize low
+```
+
+**负面词（所有风格通用）**：illustration, cartoon, 3D render, neon, glossy, high contrast, rainbow, busy background, stock photo, dark full-bleed, high saturation
 
 #### 插图的 HTML 格式
 
@@ -232,7 +254,7 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
   - 英文副标题：展陈蓝 `#607EA5`，11px，`letter-spacing:5px`，大写
   - 主标题：宋体衬线（`'Songti SC','Source Han Serif SC','Noto Serif CJK SC',serif`），46px，近黑 `#171717`，`font-weight:600`，`letter-spacing:3px`，最大宽度 720px
   - 描述：注脚灰 `#77787A`，14px，`line-height:1.6`，最大宽度 480px
-  - 底部品牌标识：wordmark PNG（`templates/wordmark.png`），左下角 `bottom:32px;left:72px`，高度 26px，`opacity:0.8`
+  - 底部品牌标识：wordmark（已内嵌为 base64，无外部依赖），左下角 `bottom:32px;left:72px`，高度 26px，`opacity:0.8`
 - 字体对比：标题用宋体衬线，副标题和描述用无衬线，形成杂志感的软硬对比
 
 ### 第 3 步：组织输出文件
