@@ -23,18 +23,18 @@ except ImportError:
     raise
 
 # ─────────────────────────────────────────────
-# 品牌色板
+# 品牌色板 v7.0
 # ─────────────────────────────────────────────
 def hex_rgb(h):
     h = h.lstrip('#')
     return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
-C_NAVY  = hex_rgb("#2F4156")
-C_TEAL  = hex_rgb("#567C8D")
-C_BLUE  = hex_rgb("#C8D9E6")
-C_LBLUE = hex_rgb("#EAF3F8")
-C_DPINK = hex_rgb("#B07A72")
-C_TEXT  = hex_rgb("#333333")
+C_NAVY  = hex_rgb("#171717")   # 近黑
+C_TEAL  = hex_rgb("#607EA5")   # 展陈蓝
+C_BLUE  = hex_rgb("#B8D9EA")   # 天蓝
+C_LBLUE = hex_rgb("#EBF4F9")   # 天蓝白
+C_DPINK = hex_rgb("#D9A8B2")   # 玫瑰粉
+C_TEXT  = hex_rgb("#171717")   # 近黑
 C_WHITE = (255, 255, 255)
 
 # ─────────────────────────────────────────────

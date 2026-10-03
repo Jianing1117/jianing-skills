@@ -81,6 +81,14 @@ async def generate_cover_async(
     html_content = html_content.replace('{{SUBTITLE}}', subtitle)
     html_content = html_content.replace('{{DESCRIPTION}}', description)
 
+    # 临时文件在 /tmp，wordmark 的相对路径会断，改成绝对路径
+    wordmark_path = TEMPLATE_PATH.parent / "wordmark.png"
+    if wordmark_path.exists():
+        html_content = html_content.replace(
+            'src="wordmark.png"',
+            f'src="file://{wordmark_path}"'
+        )
+
     # 创建临时 HTML 文件
     with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False, encoding='utf-8') as f:
         f.write(html_content)
