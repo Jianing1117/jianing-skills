@@ -91,7 +91,7 @@ AI 读完文章后自动选择模板，不需要用户指定：
 
 1. **所有样式必须内联**（inline style），不能用 `<style>` 或 `<class>`，微信编辑器会过滤掉
 2. **不能使用外部字体引入**，使用系统字体栈：`'PingFang SC','Noto Sans SC',-apple-system,sans-serif`
-3. **图片不处理**，保留原始 `![alt](url)` 提示用户手动上传
+3. **用户原文中的图片**保留为占位提示框；**长文自动插图**由 AI 生成（见第 1.5 步）
 4. **最大宽度 680px**，居中显示
 5. **链接在公众号中不可点击**，转换为加粗文字或脚注形式
 
@@ -138,6 +138,73 @@ python3 "$SKILL_DIR/scripts/md_to_wechat.py" \
 open "$OUTPUT_DIR/wechat-<标题>.html"
 ```
 
+### 第 1.5 步：自动插图（长文自动触发）
+
+当文章正文超过 **3000 字**或包含 **3 个及以上 H2 章节**时，自动为文章生成品牌风格的配图，插入 HTML 中。短文（<3000 字且 <3 个 H2）不插图。
+
+#### 插图数量
+
+| 文章长度 | H2 章节数 | 插图数 |
+|---------|---------|-------|
+| 3000–5000 字 | 3–4 | 1 张 |
+| 5000–8000 字 | 4–6 | 2 张 |
+| 8000 字以上 | 6+ | 2–3 张（最多 3 张） |
+
+#### 插入位置
+
+- 在 **H2 章节之间**插入，不在文章开头或结尾
+- 均匀分布：如 2 张图 + 6 个章节，分别放在第 2 和第 4 章节之后
+- 插图前后各留 `margin:40px 0`，与正文有呼吸空间
+
+#### 插图风格（严格遵循 brand-kit imagery-prompts.md）
+
+三种风格按文章内容自动选择，**不混用**——一篇文章只用一种：
+
+| 风格 | 适合的文章内容 | 关键词 |
+|------|-------------|-------|
+| 物件 OBJECT | 工具、方法、清单、具体事物 | 纯白底、一件真实物件、留白四分之三以上、档案馆展签感 |
+| 摄影 PHOTOGRAPHY | 生活、人物、场景、叙事 | 低饱和冷灰调、胶片颗粒、韩国画册感、留出空处 |
+| 弥散光 DIFFUSED | 抽象、情感、观点、内省 | 雾白底、一团天蓝/樱粉色光晕开、纸纹颗粒、实验感 |
+
+**色相规则**：插图只用文章主色——天蓝系文章用天蓝 `#B8D9EA`，樱粉系文章用樱粉 `#E7C4C8`。其余只有灰和白。
+
+**禁止项**：满版深色、高饱和、插画、3D 渲染、霓虹、光泽反光、彩虹渐变、stock photo 感。
+
+#### 图片尺寸
+
+- 宽度：680px（与正文等宽）
+- 比例：16:9（680×383px）或 3:2（680×453px）
+- 格式：PNG 或 JPG，单张 <500KB
+
+#### 生成方式
+
+AI 根据章节内容 + 上面的风格规则，自动撰写提示词并生成图片。提示词模板参考 brand-kit 的 `06-imagery/imagery-prompts.md`，只替换主体物件/场景描述，不改整体调性。
+
+#### 插图的 HTML 格式
+
+生成的图片保存到输出目录，在 HTML 中用以下格式嵌入：
+
+```html
+<section style="margin:40px 0;text-align:center;">
+  <img src="insert-01.png" alt="章节相关描述" style="width:100%;max-width:680px;border-radius:4px;display:block;margin:0 auto;">
+</section>
+```
+
+> **注意**：粘贴到微信公众号后台时，图片需要手动上传替换。HTML 中的 `src` 仅用于本地预览。
+
+#### 输出文件
+
+插图文件与 HTML 和封面放在同一目录：
+
+```
+<OUTPUT_DIR>/
+├── wechat-[标题].html
+├── wechat-cover-[标题].png
+├── insert-01.png              # 第 1 张插图
+├── insert-02.png              # 第 2 张（如有）
+└── insert-03.png              # 第 3 张（如有）
+```
+
 ### 第 2 步：生成微信封面图片
 
 使用封面生成脚本：
@@ -170,12 +237,15 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 
 ### 第 3 步：组织输出文件
 
-将生成的两个文件放在同一文件夹：
+将所有文件放在同一文件夹：
 
 ```
 <OUTPUT_DIR>/
 ├── wechat-[标题].html          # 公众号排版 HTML
-└── wechat-cover-[标题].png     # 封面图片
+├── wechat-cover-[标题].png     # 封面图片
+├── insert-01.png              # 自动插图（长文才有）
+├── insert-02.png              # 第 2 张（如有）
+└── insert-03.png              # 第 3 张（如有）
 ```
 
 ### 第 4 步：手动构建（脚本不可用时的兜底）
@@ -392,12 +462,22 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ### 图片（![alt](url)）
 
-微信图片需要手动上传，转换为与提示框同风格的占位：
+分两种情况：
+
+**1. 用户在 Markdown 中写的 `![alt](url)`** → 转为占位提示框（微信图片需手动上传）：
 
 ```html
 <section style="margin:28px 0;padding:20px 24px;background:#EBF4F9;border-radius:8px;">
   <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0 0 8px;font-weight:600;">IMAGE</p>
   <p style="font-size:14px;color:#607EA5;line-height:1.8;margin:0;">alt文字（请手动上传图片）</p>
+</section>
+```
+
+**2. AI 自动生成的插图**（见第 1.5 步） → 直接嵌入 `<img>` 标签用于本地预览，粘贴到公众号后台时手动上传替换：
+
+```html
+<section style="margin:40px 0;text-align:center;">
+  <img src="insert-01.png" alt="描述" style="width:100%;max-width:680px;border-radius:4px;display:block;margin:0 auto;">
 </section>
 ```
 
@@ -479,15 +559,26 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 - 格式：PNG
 - 文件名：`wechat-cover-[标题].png`
 
-### 3. 输出文件夹结构
+### 3. 自动插图（长文才有）
+
+- 触发条件：正文 >3000 字 或 ≥3 个 H2
+- 风格：物件 / 摄影 / 弥散光，一篇只用一种
+- 色相：只用文章主色（天蓝或樱粉）+ 灰 + 白
+- 尺寸：680px 宽，16:9 或 3:2
+- 文件名：`insert-01.png`、`insert-02.png`、`insert-03.png`
+
+### 4. 输出文件夹结构
 
 ```
 <OUTPUT_DIR>/
 ├── wechat-[标题].html          # 公众号排版 HTML
-└── wechat-cover-[标题].png     # 封面图片
+├── wechat-cover-[标题].png     # 封面图片
+├── insert-01.png              # 自动插图（长文才有）
+├── insert-02.png
+└── insert-03.png
 ```
 
-生成完毕后，用 `open` 命令打开两个文件让用户查看：
+生成完毕后，用 `open` 命令打开文件让用户查看：
 ```bash
 open "$OUTPUT_DIR/wechat-<标题>.html"
 open "$OUTPUT_DIR/wechat-cover-<标题>.png"
@@ -509,7 +600,9 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 - [ ] 列表用品牌色小圆点（6px），紧凑排列
 - [ ] 代码块使用雾白 `#F5F4F0` 底色
 - [ ] 链接已转换为文字+括号注释
-- [ ] 图片已转换为 IMAGE 占位提示
+- [ ] 用户原文图片已转换为 IMAGE 占位提示
+- [ ] 长文（>3000 字或 ≥3 H2）已自动生成插图，风格符合 brand-kit imagery-prompts
+- [ ] 插图只用文章主色，无高饱和/满版深色/插画
 - [ ] **未修改原文任何文字内容**
 - [ ] 结尾已加入品牌卡片占位提示（颜色跟主色）
 - [ ] 已用 `open` 命令打开 HTML 预览
@@ -565,6 +658,7 @@ AI 自动从文章内容中提取以下信息，不需要用户手动指定：
 - 有疑问的地方（如图片、特殊格式）先做合理处理，交付后再提示用户核查
 - AI 自动判断文章类型、主色、封面信息，用户只需提供 Markdown 原文
 - 封面副标题优先从文章中提取英文或重要句子，而不是默认生成
+- **长文自动插图**：超过 3000 字或 3 个 H2 的文章，AI 自动生成 1-3 张品牌风格配图插入章节之间，风格严格遵循 brand-kit `06-imagery/imagery-prompts.md`
 
 ---
 
