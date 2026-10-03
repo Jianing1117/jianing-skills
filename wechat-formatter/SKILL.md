@@ -1,6 +1,6 @@
 ---
 name: wechat-formatter
-description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公众号编辑器的 HTML 推文 + 900x383px 封面图片，严格遵循「加宁慢慢来」品牌视觉规范 v7.0。当用户说"排版公众号""帮我生成推文""把这篇文章转成公众号格式""做微信封面"等相关指令时激活此 skill。
+description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公众号编辑器的 HTML 推文 + 900x383px 封面图片，严格遵循「加宁慢慢来」品牌视觉规范 v7.0。当用户说"排版公众号""帮我生成推文""把这篇文章转成公众号格式""做微信封面""WeChat Article Formatter""WeChat Formatter""wechat-formatter""微信文章排版""微信排版"等相关指令时激活此 skill。
 ---
 
 # Wechat Article Formatter
