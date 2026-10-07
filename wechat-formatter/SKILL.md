@@ -547,12 +547,10 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 </section>
 ```
 
-> **底部卡片说明**：使用用户明确提供的头像和二维码生成。粘贴到微信公众号后台后，在文章末尾手动插入该图片即可。
+> **底部卡片说明**：卡片是定稿的成品图 `templates/footer-card.png`（白底：IP 头像与主标识、Think long / Grow slowly / Compound quietly、慢复利社群与三个板块、网址、小助理二维码）。每篇直接用这张，粘贴到微信公众号后台后，在文章末尾手动插入即可。要改卡片，改 brand kit 的 `05-templates/wechat/footer-card.html` 再导出替换。
 > 示例：
 > ```bash
 > python3 "$SKILL_DIR/scripts/generate_footer_card.py" \
->   --avatar "<头像图片路径>" \
->   --qrcode "<二维码图片路径>" \
 >   --output "$OUTPUT_DIR/jianing-footer-card.png"
 > ```
 
@@ -689,4 +687,4 @@ AI 自动从文章内容中提取以下信息，不需要用户手动指定：
 
 - **md_to_wechat.py**：无外部依赖，Python 3 标准库即可
 - **generate_cover.py**：需要 `playwright`（`pip3 install playwright && python3 -m playwright install chromium`）
-- **generate_footer_card.py**：需要 `Pillow`（`pip3 install pillow`）
+- **generate_footer_card.py**：无外部依赖，只是把 `templates/footer-card.png` 复制到输出目录
