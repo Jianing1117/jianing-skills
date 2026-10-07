@@ -25,7 +25,6 @@ C_CODE   = "#F5F4F0"   # 雾白 · 代码块底色
 C_BORDER = "#D5D5D2"   # 陈列灰 · 代码块边框
 C_TEXT   = "#171717"   # 近黑 · 正文文字
 C_PINK   = "#E7C4C8"   # 樱粉
-C_DPINK  = "#D9A8B2"   # 玫瑰粉
 C_GREY   = "#A9AAAB"   # 中灰 · END 灰字
 
 # ─────────────────────────────────────────────
@@ -60,12 +59,12 @@ FOOTER_HTML = f"""
 <!-- END 结尾 -->
 <section style="margin-top:72px;text-align:center;">
   <p style="font-size:11px;color:{C_GREY};margin:0 0 16px;letter-spacing:5px;">— END —</p>
-  <p style="font-size:15px;color:{C_NAVY};margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号 👇</p>
+  <p style="font-size:15px;color:{C_NAVY};margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
 </section>
 
 <!-- 底部品牌卡片：请手动插入图片 -->
 <section style="margin:20px 0 0;padding:20px;background:{C_LBLUE};border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:{C_TEAL};letter-spacing:3px;margin:0;line-height:1.8;">📌 此处请插入底部品牌卡片图片</p>
+  <p style="font-size:11px;color:{C_TEAL};letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
 </section>
 """
 

@@ -54,8 +54,7 @@ description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公
 | 樱粉 | `#E7C4C8` | 随笔/观点类主色：列表圆点、分隔短线 |
 | 天蓝白 | `#EBF4F9` | TIP 提示框底色、IMAGE 占位底色 |
 | 樱粉白 | `#F8EDEE` | NOTE 提示框底色（随笔模板） |
-| 展陈蓝 | `#607EA5` | 英文标签（CHAPTER/POINT/TIP）、有序列表数字、封面副标题 |
-| 玫瑰粉 | `#D9A8B2` | 英文标签（ESSAY/NOTE）、随笔模板提示框标签 |
+| 展陈蓝 | `#607EA5` | 所有英文标签（CHAPTER/POINT/TIP/ESSAY/NOTE）、有序列表数字、封面副标题。彩色的字只用展陈蓝，樱粉系文章也一样 |
 | 近黑 | `#171717` | 正文文字、标题、strong、表头下线 |
 | 注脚灰 | `#77787A` | 注脚、说明文字、封面描述 |
 | 中灰 | `#A9AAAB` | END 灰字、DON'T 标签 |
@@ -72,7 +71,7 @@ description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公
   - 封面色签：天蓝 `#B8D9EA`
 
 - **樱粉系**（个人 / 情感 / 生活 / 随笔 / 观点）：
-  - 英文标签：玫瑰粉 `#D9A8B2`
+  - 英文标签：展陈蓝 `#607EA5`（标签字不随主色变）
   - 圆点 / 短线：樱粉 `#E7C4C8`
   - 提示框：樱粉白 `#F8EDEE` 底 + `NOTE` 标签
   - 封面色签：樱粉 `#E7C4C8`
@@ -324,11 +323,11 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 **随笔类（ESSAY）**：
 - 不编号，只在文章开头出现一次 `ESSAY` 标签
-- 标签用玫瑰粉 `#D9A8B2`
+- 标签用展陈蓝 `#607EA5`
 - 段落之间用短线分隔，不用标题
 
 ```html
-<p style="font-size:11px;color:#D9A8B2;letter-spacing:4px;margin:0 0 24px;font-weight:500;">ESSAY</p>
+<p style="font-size:11px;color:#607EA5;letter-spacing:4px;margin:0 0 24px;font-weight:500;">ESSAY</p>
 ```
 
 ---
@@ -364,6 +363,8 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 ---
 
 ### 加粗（**text**）
+
+公众号正文可以加粗，这是品牌规范 05 章「正文隐形」在公众号上的例外（2026-10-07 定）。加粗只用近黑，不变色。
 
 ```html
 <strong style="color:#171717;font-weight:bold;">加粗文字</strong>
@@ -433,7 +434,7 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ```html
 <section style="margin:28px 0;padding:20px 24px;background:#F8EDEE;border-radius:8px;">
-  <p style="font-size:11px;color:#D9A8B2;letter-spacing:3px;margin:0 0 8px;font-weight:600;">NOTE</p>
+  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0 0 8px;font-weight:600;">NOTE</p>
   <p style="font-size:15px;color:#171717;line-height:1.8;margin:0;">引用内容</p>
 </section>
 ```
@@ -532,17 +533,17 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 <!-- END 结尾 -->
 <section style="margin-top:72px;text-align:center;">
   <p style="font-size:11px;color:#A9AAAB;margin:0 0 16px;letter-spacing:5px;">— END —</p>
-  <p style="font-size:15px;color:#171717;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号 👇</p>
+  <p style="font-size:15px;color:#171717;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
 </section>
 
 <!-- 底部品牌卡片（天蓝版） -->
 <section style="margin:20px 0 0;padding:20px;background:#EBF4F9;border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0;line-height:1.8;">📌 此处请插入底部品牌卡片图片</p>
+  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
 </section>
 
 <!-- 底部品牌卡片（樱粉版，用于随笔类） -->
 <section style="margin:20px 0 0;padding:20px;background:#F8EDEE;border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:#D9A8B2;letter-spacing:3px;margin:0;line-height:1.8;">📌 此处请插入底部品牌卡片图片</p>
+  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
 </section>
 ```
 

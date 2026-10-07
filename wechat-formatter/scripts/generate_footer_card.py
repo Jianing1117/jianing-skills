@@ -33,7 +33,6 @@ C_NAVY  = hex_rgb("#171717")   # 近黑
 C_TEAL  = hex_rgb("#607EA5")   # 展陈蓝
 C_BLUE  = hex_rgb("#B8D9EA")   # 天蓝
 C_LBLUE = hex_rgb("#EBF4F9")   # 天蓝白
-C_DPINK = hex_rgb("#D9A8B2")   # 玫瑰粉
 C_TEXT  = hex_rgb("#171717")   # 近黑
 C_WHITE = (255, 255, 255)
 
@@ -220,7 +219,7 @@ def generate_footer_card(
     t1 = "想要加入 "
     t2 = "「智愈+」AI赋能个人成长社群"
     draw.text((TEXT_X, ty), t1, fill=C_TEXT, font=f_body)
-    draw.text((TEXT_X + tw(draw, t1, f_body), ty), t2, fill=C_DPINK, font=f_bold)
+    draw.text((TEXT_X + tw(draw, t1, f_body), ty), t2, fill=C_TEAL, font=f_bold)
     ty += LINE_H["cta"]
 
     # 微信请加（混色行）
