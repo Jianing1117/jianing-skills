@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 generate_footer_card.py
-输出「加宁慢慢来」公众号文末品牌卡片（2026-10-08 定稿，2160 × 1720）。
+输出「加宁慢慢来」公众号文末品牌卡片（2026-10-08 定稿，2160 × 1600）。
 
 卡片是固定的成品图 templates/footer-card.png，不再按头像、二维码现场生成。
 要改卡片，改 brand kit 里的 05-templates/wechat/footer-card.html，导出后替换这张图。
