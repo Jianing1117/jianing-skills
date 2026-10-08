@@ -62,9 +62,9 @@ FOOTER_HTML = f"""
   <p style="font-size:15px;color:{C_NAVY};margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
 </section>
 
-<!-- 底部品牌卡片：请手动插入图片 -->
-<section style="margin:20px 0 0;padding:20px;background:{C_LBLUE};border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:{C_TEAL};letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
+<!-- 底部品牌卡片：本地预览用；粘贴到公众号后台后，把 footer-card.png 上传替换这张图 -->
+<section style="margin:32px 0 0;text-align:center;">
+  <img src="footer-card.png" alt="加宁慢慢来 · Long Arc Society" style="width:100%;max-width:680px;display:block;margin:0 auto;">
 </section>
 """
 
@@ -446,6 +446,13 @@ def main():
     if args.output:
         Path(args.output).write_text(html, encoding='utf-8')
         print(f'✅ 已生成：{args.output}')
+        # 文末品牌卡片是定稿成品图，复制到 HTML 旁边，预览时就能看到
+        import shutil
+        card = Path(__file__).resolve().parent.parent / 'templates' / 'footer-card.png'
+        if card.exists():
+            dst = Path(args.output).parent / 'footer-card.png'
+            shutil.copyfile(card, dst)
+            print(f'✅ 文末品牌卡片：{dst}')
     else:
         print(html)
 

@@ -527,7 +527,7 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ### 文章结尾（固定）
 
-每篇文章末尾自动加入结尾区 + **底部品牌卡片图片占位提示**。占位框颜色跟文章主色。
+每篇文章末尾自动加入结尾区 + **文末品牌卡片图**（定稿成品 `templates/footer-card.png`，脚本会把它复制到 HTML 旁边）。
 
 ```html
 <!-- END 结尾 -->
@@ -536,18 +536,13 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
   <p style="font-size:15px;color:#171717;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
 </section>
 
-<!-- 底部品牌卡片（天蓝版） -->
-<section style="margin:20px 0 0;padding:20px;background:#EBF4F9;border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
-</section>
-
-<!-- 底部品牌卡片（樱粉版，用于随笔类） -->
-<section style="margin:20px 0 0;padding:20px;background:#F8EDEE;border-radius:12px;text-align:center;">
-  <p style="font-size:11px;color:#607EA5;letter-spacing:3px;margin:0;line-height:1.8;">此处插入底部品牌卡片图片</p>
+<!-- 文末品牌卡片（所有文章同一张） -->
+<section style="margin:32px 0 0;text-align:center;">
+  <img src="footer-card.png" alt="加宁慢慢来 · Long Arc Society" style="width:100%;max-width:680px;display:block;margin:0 auto;">
 </section>
 ```
 
-> **底部卡片说明**：卡片是定稿的成品图 `templates/footer-card.png`（白底，上下排：LONG ARC SOCIETY 与慢复利社群、网址，三个板块，底部 IP 头像与主标识、小助理二维码）。每篇直接用这张，粘贴到微信公众号后台后，在文章末尾手动插入即可。要改卡片，改 brand kit 的 `05-templates/wechat/footer-card.html` 再导出替换。
+> **底部卡片说明**：卡片是定稿的成品图 `templates/footer-card.png`（白底，上下排：LONG ARC SOCIETY 与慢复利社群、网址，三个板块，底部 IP 头像与主标识、小助理二维码）。每篇直接用这张：本地预览时 HTML 里已经显示；粘贴到微信公众号后台后，图片要手动上传替换（和插图一样）。要改卡片，改 brand kit 的 `05-templates/wechat/footer-card.html` 再导出替换。
 > 示例：
 > ```bash
 > python3 "$SKILL_DIR/scripts/generate_footer_card.py" \
@@ -625,7 +620,7 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 - [ ] 长文（>3000 字或 ≥3 H2）已自动生成插图，风格符合 brand-kit imagery-prompts
 - [ ] 插图只用文章主色，无高饱和/满版深色/插画
 - [ ] **未修改原文任何文字内容**
-- [ ] 结尾已加入品牌卡片占位提示（颜色跟主色）
+- [ ] 结尾已放入文末品牌卡片 `footer-card.png`，并提醒在公众号后台上传替换
 - [ ] 已用 `open` 命令打开 HTML 预览
 
 ### 封面图片
