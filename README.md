@@ -35,6 +35,7 @@ Jianing 的公开 Skill 合集仓库。每个一级目录都是可独立安装�
 ### 单独的仓库
 
 - [AI 电脑体检 · mac-ai-checkup](https://github.com/Jianing1117/mac-ai-checkup)：给 Mac 做 AI 时代的体检，找出你和 AI 都容易漏掉的占用、悄悄失败的后台和 AI 留下的乱；删除只进废纸篓。
+- [Screen Studio 智能初剪 · screenstudio-edit](https://github.com/Jianing1117/screenstudio-edit)：让 AI 给 Screen Studio 录屏做初剪，剪掉空白停顿、失败的重录和口误，另存一个还能继续精修的工程副本，原工程不改。
 
 ## 安装
 
