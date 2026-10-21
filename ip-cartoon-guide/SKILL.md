@@ -10,6 +10,8 @@ description: >-
 
 # IP Cartoon Guide
 
+Illustrations made one at a time rarely keep the same character. This skill makes a reusable personal IP cartoon character from one photo, then draws your article and project illustrations with that same character. If you already have a usage guide, start at Stage 2; it needs an agent that can generate and edit images.
+
 ## Contract
 
 Run two stages:
