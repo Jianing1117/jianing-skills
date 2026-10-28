@@ -22,7 +22,7 @@ Jianing 的公开 Skill 合集仓库。每个一级目录都是可独立安装�
 |---|---|
 | [ip-cartoon-guide](ip-cartoon-guide/) | 从照片建立可复用个人 IP，并延伸到同角色内容插图 |
 | [super-slides](super-slides/) | 生成 HTML 互动演示稿，可选导出 PDF/PPT 或部署 |
-| [wechat-formatter](wechat-formatter/) | 微信公众号排版与封面生成 |
+| [wechat-formatter](wechat-formatter/) | 微信公众号排版、重点句筛选与浅蓝底纹加粗、封面生成 |
 
 ### 自我认知
 

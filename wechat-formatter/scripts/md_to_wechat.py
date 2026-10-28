@@ -111,6 +111,21 @@ class WechatRenderer:
                       f'<span style="font-size:12px;color:{C_TEAL};">（链接：{m.group(2)}）</span>',
             text
         )
+        # 语义重点由 AI 先用 == 标记；代码片段中的相等符号保持原样。
+        code_fragments = []
+
+        def protect_code(match):
+            code_fragments.append(match.group(0))
+            return f'\0wechat_code_{len(code_fragments) - 1}\0'
+
+        text = re.sub(r'<code\b[^>]*>.*?</code>', protect_code, text, flags=re.S)
+        text = re.sub(
+            r'==(.+?)==',
+            lambda m: f'<span data-highlight="true" style="color:{C_NAVY};font-weight:700;background-color:{C_LBLUE};">{m.group(1)}</span>',
+            text,
+        )
+        for index, code in enumerate(code_fragments):
+            text = text.replace(f'\0wechat_code_{index}\0', code)
         return text
 
     def h2(self, text: str) -> str:
