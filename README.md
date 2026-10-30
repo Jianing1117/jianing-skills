@@ -22,7 +22,7 @@ Jianing 的公开 Skill 合集仓库。每个一级目录都是可独立安装�
 |---|---|
 | [ip-cartoon-guide](ip-cartoon-guide/) | 从照片建立可复用个人 IP，并延伸到同角色内容插图 |
 | [super-slides](super-slides/) | 生成 HTML 互动演示稿，可选导出 PDF/PPT 或部署 |
-| [wechat-formatter](wechat-formatter/) | 微信公众号排版、重点句筛选与浅蓝底纹加粗、封面生成 |
+| [wechat-formatter](wechat-formatter/) | 轻盈正文、品牌标题与列表、重点句高亮、封面及紧凑文末关注区 |
 
 ### 自我认知
 
@@ -64,7 +64,7 @@ cp -R mindmirror "$HOME/.claude/skills/"
 - `ip-cartoon-guide`：需要 Agent 具备图像生成/编辑能力。
 - `awesome-creator-cover`：内置脚本需 Python 3；输出为 `.excalidraw`。
 - `super-slides`：生成 HTML 无强制依赖；PDF 导出和在线部署需 Node.js 及相应 CLI，PPTX 抽取助手另需 `python-pptx`。只有在用户明确选择部署后才发布到外部服务。
-- `wechat-formatter`：封面生成需 `playwright` 和 `Pillow`。
+- `wechat-formatter`：正文转换与复制文末卡片仅需 Python 3 标准库，封面生成需 `playwright`。
 
 ## 迁移来源
 

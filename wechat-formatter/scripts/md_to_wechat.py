@@ -60,10 +60,11 @@ FOOTER_HTML = f"""
 <section style="margin-top:72px;text-align:center;">
   <p style="font-size:11px;color:{C_GREY};margin:0 0 16px;letter-spacing:5px;">— END —</p>
   <p style="font-size:15px;color:{C_NAVY};margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
+  <p data-follow-pointer="true" style="text-align:center;margin:8px 0 0;padding:0;font-family:Apple Symbols,Segoe UI Symbol,Noto Sans Symbols 2,serif;font-size:36px;font-weight:400;line-height:1.1;color:{C_BLUE};letter-spacing:0;">☟</p>
 </section>
 
 <!-- 底部品牌卡片：本地预览用；粘贴到公众号后台后，把 footer-card.png 上传替换这张图 -->
-<section style="margin:32px 0 0;text-align:center;">
+<section style="margin:24px 0 0;text-align:center;">
   <img src="footer-card.png" alt="加宁慢慢来 · Long Arc Society" style="width:100%;max-width:680px;display:block;margin:0 auto;">
 </section>
 """
@@ -153,7 +154,7 @@ class WechatRenderer:
 
     def paragraph(self, text: str) -> str:
         return (
-            f'<p style="font-size:16px;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:0.5px;">'
+            f'<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
             f'{self.render_inline(text)}</p>\n'
         )
 
@@ -162,7 +163,7 @@ class WechatRenderer:
         for emoji, text in items:
             icon_html = _replace_leading_emoji(emoji, self.render_inline(text))
             inner += (
-                f'  <p style="font-size:16px;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:0.5px;">'
+                f'  <p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
                 f'{icon_html}</p>\n'
             )
         return (
@@ -176,15 +177,15 @@ class WechatRenderer:
         parts = []
         for text in items:
             inline = self.render_inline(text)
-            dot = f'<span style="display:inline-block;width:6px;height:6px;background:{C_BLUE};border-radius:50%;margin-right:10px;vertical-align:middle;"></span>'
+            dot = f'<span data-marker="true" style="color:{C_BLUE};font-size:16px;margin-right:10px;">•</span>'
             if compact:
                 parts.append(
-                    f'<p style="font-size:16px;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:0.5px;">'
+                    f'<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
                     f'{dot}{inline}</p>\n'
                 )
             else:
                 parts.append(
-                    f'<p style="font-size:16px;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:0.5px;">'
+                    f'<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
                     f'{dot}{inline}</p>\n'
                 )
         if compact:
@@ -196,15 +197,15 @@ class WechatRenderer:
         parts = []
         for idx, text in enumerate(items, 1):
             inline = self.render_inline(text)
-            num = f'<span style="color:{C_TEAL};font-weight:600;margin-right:6px;">{idx}.</span>'
+            num = f'<span data-marker="true" style="color:{C_TEAL};font-weight:600;margin-right:6px;">{idx}.</span>'
             if compact:
                 parts.append(
-                    f'<p style="font-size:16px;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:0.5px;">'
+                    f'<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
                     f'{num}{inline}</p>\n'
                 )
             else:
                 parts.append(
-                    f'<p style="font-size:16px;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:0.5px;">'
+                    f'<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:{C_TEXT};line-height:1.9;margin:0 0 28px;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">'
                     f'{num}{inline}</p>\n'
                 )
         if compact:
@@ -421,18 +422,21 @@ def wrap_html(content: str, title: str = '微信排版预览') -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>微信排版预览 - {title}</title>
 <style>
-  body {{ background: #f0f0f0; padding: 40px 20px; }}
+  body {{ margin:0; background:#f0f0f0; padding:24px 0; }}
+  .preview-shell {{ box-sizing:border-box; max-width:720px; margin:0 auto; padding:40px 20px; background:#FFFFFF; }}
   .tip {{ text-align:center; font-family:sans-serif; font-size:13px; color:#888; margin-bottom:20px; }}
 </style>
 </head>
 <body>
-<p class="tip">点进白色内容区域 → 全选（Cmd+A）→ 复制（Cmd+C）→ 粘贴到微信编辑器</p>
+<p class="tip">只复制 #wechat-article 正文区域；图片在公众号后台上传后再核验保存</p>
 
-<section style="max-width:680px;margin:0 auto;padding:40px 44px;font-family:'PingFang SC','Noto Sans SC',-apple-system,sans-serif;color:{C_TEXT};background:#FFFFFF;border-radius:4px;">
+<main class="preview-shell">
+<section id="wechat-article" style="box-sizing:border-box;width:100%;margin:0;padding:0 20px;font-family:'PingFang SC','Noto Sans SC',-apple-system,sans-serif;color:{C_TEXT};background:#FFFFFF;border-radius:4px;">
 
 {content}
 {FOOTER_HTML}
 </section>
+</main>
 </body>
 </html>
 """

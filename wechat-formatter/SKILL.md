@@ -1,13 +1,15 @@
 ---
 name: wechat-formatter
-description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公众号编辑器的 HTML 推文 + 900x383px 封面图片，严格遵循「加宁慢慢来」品牌视觉规范 v7.0。当用户说"排版公众号""帮我生成推文""把这篇文章转成公众号格式""做微信封面""WeChat Article Formatter""WeChat Formatter""wechat-formatter""微信文章排版""微信排版"等相关指令时激活此 skill。
+description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公众号编辑器的 HTML 推文 + 900x383px 封面图片，沿用「加宁慢慢来」品牌视觉规范。当用户说"排版公众号""帮我生成推文""把这篇文章转成公众号格式""做微信封面""WeChat Article Formatter""WeChat Formatter""wechat-formatter""微信文章排版""微信排版"等相关指令时激活此 skill。
 ---
 
 # Wechat Article Formatter
 
 ## 概述
 
-文章写完，排版和封面还要再花半小时。这个 skill 把一篇 Markdown 文章按文章类型自动选版式和主色，转成能直接粘贴进公众号后台的排版，同时生成一张 900×383 的封面图。默认套用「加宁慢慢来」品牌视觉规范 v7.0，想换风格可以 fork 来改。
+文章写完，排版和封面还要再花半小时。这个 skill 把一篇 Markdown 文章按文章类型自动选版式和主色，转成能直接粘贴进公众号后台的排版，同时生成一张 900×383 的封面图。默认套用「加宁慢慢来」品牌视觉规范，想换风格可以 fork 来改。
+
+**默认排版标准**：普通正文轻字重与适量字距，标题、列表和重点使用 Brand Kit；正文根容器仅加一次左右各 20px 的阅读留白，文末关注文案下放紧凑的蓝色小手。具体参数见 [排版标准](references/layout-standard.md)。公开版交付本地文件，按用户要求决定是否操作公众号。
 
 ### 输出内容
 
@@ -40,7 +42,7 @@ description: 把一篇 Markdown 格式的文章转成可直接粘贴到微信公
 
 ---
 
-## 品牌视觉规范 v7.0（快速参考）
+## 品牌视觉规范（快速参考）
 
 ### 色板
 
@@ -86,10 +88,10 @@ AI 读完文章后自动选择模板，不需要用户指定：
 
 ### 微信排版约束
 
-1. **所有样式必须内联**（inline style），不能用 `<style>` 或 `<class>`，微信编辑器会过滤掉
-2. **不能使用外部字体引入**，使用系统字体栈：`'PingFang SC','Noto Sans SC',-apple-system,sans-serif`
+1. **导出正文排版样式必须内联**（inline style），不依赖 `<style>` 或 class；本地预览外壳可以使用 CSS，但不复制到微信，微信图片自身的 class 与属性保留
+2. **不能引入外部字体**。普通正文使用 `Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif`，300 字重；章节标题与品牌标签保留模板原有字体和字重。
 3. **用户原文中的图片**保留为占位提示框；**长文自动插图**由 AI 生成（见第 1.5 步）
-4. **最大宽度 680px**，居中显示
+4. **阅读留白只加一次**：导出正文根容器 width:100%、box-sizing:border-box、margin:0、padding:0 20px；正文与图片共用边线。680px 上限和预览页留白由外壳控制，外壳不复制到微信。
 5. **链接在公众号中不可点击**，转换为加粗文字或脚注形式
 
 ---
@@ -286,7 +288,7 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 ### 外层容器（所有内容的包裹层）
 
 ```html
-<section style="max-width:680px;margin:0 auto;padding:40px 44px;font-family:'PingFang SC','Noto Sans SC',-apple-system,sans-serif;color:#171717;background:#FFFFFF;border-radius:4px;">
+<section id="wechat-article" style="box-sizing:border-box;width:100%;margin:0;padding:0 20px;font-family:'PingFang SC','Noto Sans SC',-apple-system,sans-serif;color:#171717;background:#FFFFFF;border-radius:4px;">
   <!-- 内容 -->
 </section>
 ```
@@ -363,7 +365,7 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 ### 正文段落
 
 ```html
-<p style="font-size:16px;color:#171717;line-height:1.9;margin:0 0 28px;letter-spacing:0.5px;">段落内容</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:1.9;margin:0 0 28px;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">段落内容</p>
 ```
 
 ---
@@ -390,13 +392,13 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ### 无序列表（- item）
 
-用品牌色小圆点（6px），知识/清单类用天蓝 `#B8D9EA`，随笔类用樱粉 `#E7C4C8`。连续列表项紧凑排列。
+用品牌色的实际文字圆点，知识/清单类用天蓝 `#B8D9EA`，随笔类用樱粉 `#E7C4C8`。连续列表项紧凑排列。
 
 ```html
 <section style="margin:0 0 28px;">
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="display:inline-block;width:6px;height:6px;background:#B8D9EA;border-radius:50%;margin-right:10px;vertical-align:middle;"></span>列表项一</p>
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="display:inline-block;width:6px;height:6px;background:#B8D9EA;border-radius:50%;margin-right:10px;vertical-align:middle;"></span>列表项二</p>
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="display:inline-block;width:6px;height:6px;background:#B8D9EA;border-radius:50%;margin-right:10px;vertical-align:middle;"></span>列表项三</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span data-marker="true" style="color:#B8D9EA;font-size:16px;margin-right:10px;">•</span>列表项一</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span data-marker="true" style="color:#B8D9EA;font-size:16px;margin-right:10px;">•</span>列表项二</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span data-marker="true" style="color:#B8D9EA;font-size:16px;margin-right:10px;">•</span>列表项三</p>
 </section>
 ```
 
@@ -408,9 +410,9 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ```html
 <section style="margin:0 0 28px;">
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">1.</span>列表项一</p>
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">2.</span>列表项二</p>
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">3.</span>列表项三</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">1.</span>列表项一</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">2.</span>列表项二</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span style="color:#607EA5;font-weight:600;margin-right:6px;">3.</span>列表项三</p>
 </section>
 ```
 
@@ -425,7 +427,7 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ```html
 <section style="margin:0 0 28px;">
-  <p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;">
+  <p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;">
     <span style="display:inline-block;width:16px;height:16px;background:#B8D9EA;border-radius:50%;text-align:center;line-height:16px;font-size:10px;color:#FFFFFF;margin-right:8px;vertical-align:middle;">✓</span>列表项内容
   </p>
 </section>
@@ -535,8 +537,8 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 ### DO / DON'T 对照标签（清单类可选）
 
 ```html
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="display:inline-block;padding:2px 10px;background:#EBF4F9;border-radius:10px;font-size:12px;color:#607EA5;font-weight:600;margin-right:8px;vertical-align:middle;">DO</span>推荐做法</p>
-<p style="font-size:16px;color:#171717;line-height:2.2;margin:0;letter-spacing:0.5px;"><span style="display:inline-block;padding:2px 10px;background:#F5F4F0;border-radius:10px;font-size:12px;color:#A9AAAB;font-weight:600;margin-right:8px;vertical-align:middle;">DON'T</span>避免做法</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span style="display:inline-block;padding:2px 10px;background:#EBF4F9;border-radius:10px;font-size:12px;color:#607EA5;font-weight:600;margin-right:8px;vertical-align:middle;">DO</span>推荐做法</p>
+<p style="font-size:16px;font-weight:300;font-family:Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,sans-serif;color:#171717;line-height:2.2;margin:0;letter-spacing:1px;text-align:justify;word-break:normal;overflow-wrap:break-word;"><span style="display:inline-block;padding:2px 10px;background:#F5F4F0;border-radius:10px;font-size:12px;color:#A9AAAB;font-weight:600;margin-right:8px;vertical-align:middle;">DON'T</span>避免做法</p>
 ```
 
 ---
@@ -550,10 +552,11 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 <section style="margin-top:72px;text-align:center;">
   <p style="font-size:11px;color:#A9AAAB;margin:0 0 16px;letter-spacing:5px;">— END —</p>
   <p style="font-size:15px;color:#171717;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
+  <p data-follow-pointer="true" style="text-align:center;margin:8px 0 0;padding:0;font-family:Apple Symbols,Segoe UI Symbol,Noto Sans Symbols 2,serif;font-size:36px;font-weight:400;line-height:1.1;color:#B8D9EA;letter-spacing:0;">☟</p>
 </section>
 
 <!-- 文末品牌卡片（所有文章同一张） -->
-<section style="margin:32px 0 0;text-align:center;">
+<section style="margin:24px 0 0;text-align:center;">
   <img src="footer-card.png" alt="加宁慢慢来 · Long Arc Society" style="width:100%;max-width:680px;display:block;margin:0 auto;">
 </section>
 ```
@@ -631,7 +634,7 @@ open "$OUTPUT_DIR/wechat-cover-<标题>.png"
 - [ ] 用户指定的强调与取消强调已落实；跨行底纹、字重和正文措辞已检查
 - [ ] 提示框用浅底色面 + 标签，无边框
 - [ ] 表格只有表头下方一根近黑线，无其他边框
-- [ ] 列表用品牌色小圆点（6px），紧凑排列
+- [ ] 列表用品牌色的实际文字圆点，紧凑排列
 - [ ] 代码块使用雾白 `#F5F4F0` 底色
 - [ ] 链接已转换为文字+括号注释
 - [ ] 用户原文图片已转换为 IMAGE 占位提示
