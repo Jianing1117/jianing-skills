@@ -57,7 +57,7 @@ def _replace_leading_emoji(emoji: str, text: str) -> str:
 # ─────────────────────────────────────────────
 FOOTER_HTML = f"""
 <!-- END 结尾 -->
-<section style="margin-top:72px;text-align:center;">
+<section style="margin:72px 0 0;text-align:center;">
   <p style="font-size:11px;color:{C_GREY};margin:0 0 16px;letter-spacing:5px;">— END —</p>
   <p style="font-size:15px;color:{C_NAVY};margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
   <p data-follow-pointer="true" style="text-align:center;margin:8px 0 0;padding:0;font-family:Apple Symbols,Segoe UI Symbol,Noto Sans Symbols 2,serif;font-size:36px;font-weight:400;line-height:1.1;color:{C_BLUE};letter-spacing:0;">☟</p>

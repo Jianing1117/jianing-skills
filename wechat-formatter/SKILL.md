@@ -549,7 +549,7 @@ H1 一般不单独渲染为标题块，而是融入第一个段落，或者直�
 
 ```html
 <!-- END 结尾 -->
-<section style="margin-top:72px;text-align:center;">
+<section style="margin:72px 0 0;text-align:center;">
   <p style="font-size:11px;color:#A9AAAB;margin:0 0 16px;letter-spacing:5px;">— END —</p>
   <p style="font-size:15px;color:#171717;margin:0;line-height:1.8;letter-spacing:0.3px;">欢迎大家关注我的公众号</p>
   <p data-follow-pointer="true" style="text-align:center;margin:8px 0 0;padding:0;font-family:Apple Symbols,Segoe UI Symbol,Noto Sans Symbols 2,serif;font-size:36px;font-weight:400;line-height:1.1;color:#B8D9EA;letter-spacing:0;">☟</p>
